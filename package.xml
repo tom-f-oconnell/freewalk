@@ -1,9 +1,19 @@
+<?xml version="1.0"?>
 <package>
-  <description brief="TODO">
-		TODO
-  </description>
-  <author>Tom O'Connell/toconnel@caltech.edu</author>
+  <name>freewalk</name>
+  <version>0.0.0</version>
+  <description>Wrapper around tracking and stimulus delivery for Kristina's free walking behavior experiments.</description>
+
+  <maintainer email="toconnel@caltech.edu">Tom O'Connell</maintainer>
+  <author email="toconnel@caltech.edu">Tom O'Connell</author>
   <license>GPLv3</license>
   <url>https://github.com/tom-f-oconnell/freewalk</url>
-  <depend package="rospy rosserial_python rosserial_client rosserial_arduino multi_tracker stimuli"/>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>multi_tracker</build_depend>
+  <build_depend>stimuli</build_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>multi_tracker</run_depend>
+  <run_depend>stimuli</run_depend>
+  <run_depend>metatools</run_depend>
 </package>
