@@ -1,0 +1,54 @@
+
+# either 'fixed', 'alternating' or 'random'
+# initial side will always be random
+# (within recording session. same set of flies.)
+# all odors must be available on both sides to use either
+# 'alternating' or 'random'
+# TODO rename both of these (to make more general)
+olf/reinforced_odor_side_order: 'alternating'
+olf/train_one_odor_at_a_time: False
+
+olf/odors: ['ethanol 50:50 v/v in water']
+
+# 30 minute blocks in 23 hours
+olf/training_blocks: 46
+
+# TODO set tracking recording durations from sum of these
+olf/prestimulus_delay_s: 1680
+olf/test_duration_s: 0
+olf/pretest_to_train_s: 0
+olf/train_duration_s: 120
+# 28 minutes
+olf/inter_train_interval_s: 1680
+olf/train_to_posttest_s: 0
+olf/beyond_posttest_s: 0
+
+# don't need to change this
+olf/max_num_pins: 8
+
+# Arduino Mega integer pin #s for analog inputs
+# [A0=54, A15=69]
+olf/left_pins: [4]
+olf/right_pins: [5]
+
+olf/separate_balances: False
+
+# (when the pin controlling this valve is OFF)
+olf/balance_normally_flowing: True
+
+# for interfacing with other hardware devices
+olf/send_high_while_pulsing: []
+olf/send_high_while_odor: []
+
+# period between onsets of odor pulses is the sum of these
+olf/odor_pulse_ms: 1000
+olf/post_pulse_ms: 1000
+
+# TODO fix to allow repeated testing, w/o using train language
+# and without having to worry about shock parameters
+# currently just unconnected
+zap/left: 6
+zap/right: 7
+zap/shock_ms_on: 0
+zap/shock_ms_off: 1
+
