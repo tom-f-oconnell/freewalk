@@ -1,0 +1,9 @@
+<package>
+  <description brief="TODO">
+		TODO
+  </description>
+  <author>Tom O'Connell/toconnel@caltech.edu</author>
+  <license>GPLv3</license>
+  <url>https://github.com/tom-f-oconnell/freewalk</url>
+  <depend package="rospy rosserial_python rosserial_client rosserial_arduino multi_tracker stimuli"/>
+</package>
