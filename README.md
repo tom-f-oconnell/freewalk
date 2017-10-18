@@ -1,9 +1,9 @@
 
-### Hardware requirements:
+### Hardware requirements
 
 Known to work with Arduino Mega. Microcontrollers with less memory may not work, given the overhead of the ROS Arduino library.
 
-### Dependencies:
+### Dependencies
 
 [tom-f-oconnell/rosserial](https://github.com/tom-f-oconnell/rosserial)
 
@@ -14,7 +14,7 @@ Known to work with Arduino Mega. Microcontrollers with less memory may not work,
 [tom-f-oconnell/metatools](https://github.com/tom-f-oconnell/metatools)
 
 
-Install these dependencies as you would install any ROS package from source, i.e.:
+Install these dependencies as you would install any ROS package from source, i.e.
 
 - Make a catkin workspace
 - Clone each repository to `<workspace>/src`
@@ -25,7 +25,7 @@ Install these dependencies as you would install any ROS package from source, i.e
 TODO make a file to install all of these with `wstool`.
 
 
-### To compile and install the Arduino code on the Arduino MEGA (on Ubuntu):
+### To compile and install the Arduino code on the Arduino MEGA (on Ubuntu)
 
 - Run `catkin_make` from your catkin workspace and source the `<workspace>/devel/setup.bash` file.
 	1. `cd <workspace>` (I generally put my workspace at `~/catkin`)
@@ -45,14 +45,22 @@ This will setup the ROS libraries for compilation in the Arduino IDE.
 
 - Open the Arduino IDE (make sure it is the same for which you installed `<arduino>/libraries`, in case multiple are installed.). Select appropriate port and board. Press upload.
 
-### To run the experiment:
+### To run the experiment
 
 - `cd` to a directory with configuration files for the tracking and for the stimulus delivery. See `freewalk/example_config` for examples.
 - Run ```ROS_HOME=`pwd` roslaunch freewalk walk.launch```
 
-#### To test your valves:
+#### Parameters to the launch file
 
-Run ```ROS_HOME=`pwd` roslaunch stimuli walk.launch```
+- `stimuli_only`: (default=`False`) If `True`, will run the same stimuli (modulo randomization) that would happen with the same configuration.  For validation / measuring the odor output.
+
+- `port`: (default=`/dev/ttyACM0`) The port your Arduino is connected to. The port your MEGA is connected to can often be determind by inspecting the list of available ports in the Arduino IDE.
+
+- `video_only`: (default=`True`) The tracking only saves the background subtracted video, plus background frames, and some metadata. Nodes to do extra image processing and data association necessary to generate trajectories are not started.
+
+#### To test your valves
+
+Run ```ROS_HOME=`pwd` roslaunch stimuli test_valves.launch```
 
 
 This will use the same `stimulus_parameters.yaml` file `walk.launch` expects in your current directory (`ROS_HOME`), and test the union of the lists in the `olf/left_pins` and `olf/right_pins` parameters.
