@@ -44,6 +44,12 @@ olf/send_high_while_odor: []
 olf/odor_pulse_ms: 1000
 olf/post_pulse_ms: 1000
 
+# after saying which pins should be connected to which odors,
+# the program will start stimulus delivery immediately
+# (here, the odors are always connected to the same positions, so 
+#  no delay necessary)
+olf/wait_for_keypress: False
+
 # TODO fix to allow repeated testing, w/o using train language
 # and without having to worry about shock parameters
 # currently just unconnected

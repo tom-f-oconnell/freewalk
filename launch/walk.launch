@@ -21,8 +21,7 @@
   </include>
 
   <rosparam command="load" file="$(arg params)" />
-  <!-- TODO rename / refactor (not just used for choice experiment anymore) -->
-  <node name="stimulus_loader" pkg="stimuli" type="odor_randomizer_choice.py" output="screen" required="true" />
+  <node name="stimulus_loader" pkg="stimuli" type="odor_randomizer.py" output="screen" required="true" />
  
   <!-- TODO is this explicit find syntax idiomatic or is there a simpler way to find .launch files? -->
   <include file="$(find stimuli)/launch/stimulus_arduino.launch">
