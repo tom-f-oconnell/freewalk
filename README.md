@@ -1,13 +1,18 @@
 
 ### Hardware requirements:
 
-Known to work with Arduino Mega. Microcontrollers with less memory may push not work given the overhead of the ROS Arduino library.
+Known to work with Arduino Mega. Microcontrollers with less memory may not work, given the overhead of the ROS Arduino library.
 
 ### Dependencies:
+
 [tom-f-oconnell/rosserial](https://github.com/tom-f-oconnell/rosserial)
+
 [tom-f-oconnell/multi_tracker](https://github.com/tom-f-oconnell/multi_tracker)
+
 [tom-f-oconnell/stimuli](https://github.com/tom-f-oconnell/stimuli)
+
 [tom-f-oconnell/metatools](https://github.com/tom-f-oconnell/metatools)
+
 
 Install these dependencies as you would install any ROS package from source, i.e.:
 
@@ -44,4 +49,11 @@ This will setup the ROS libraries for compilation in the Arduino IDE.
 
 - `cd` to a directory with configuration files for the tracking and for the stimulus delivery. See `freewalk/example_config` for examples.
 - Run ```ROS_HOME=`pwd` roslaunch freewalk walk.launch```
+
+#### To test your valves:
+
+Run ```ROS_HOME=`pwd` roslaunch stimuli walk.launch```
+
+
+This will use the same `stimulus_parameters.yaml` file `walk.launch` expects in your current directory (`ROS_HOME`), and test the union of the lists in the `olf/left_pins` and `olf/right_pins` parameters.
 
