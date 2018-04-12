@@ -3,28 +3,31 @@
   <arg name="stimuli_only" default="False" />
   <arg name="port" default="/dev/ttyACM0" />
   <arg name="video_only" default="True" />
-  
-  <!-- TODO maybe make this expand to full path? or make more clear that it is relative to package?
-       or another arg that is absolute / a flag to switch? -->
-  <arg name="params" default="stimulus_parameters.yaml" />
 
-  <!-- TODO put snapshot_params node in this package, add another node tag -->
   <node name="versionpub" pkg="metatools" type="versionpub.py" unless="$(arg stimuli_only)">
     <rosparam>
       package_names: ['metatools', 'stimuli', 'freewalk', 'multi_tracker', 'rosserial_arduino']
     </rosparam>
   </node>
 
+
+  <include
+    file="$(find multi_tracker)/launch/load_tracking_parameter_yamls.launch"
+    unless="$(arg stimuli_only)"/>
+
   <include file="$(find multi_tracker)/launch/ptgrey_tracking.launch" unless="$(arg stimuli_only)">
     <arg name="video_only" value="$(arg video_only)" />
     <arg name="camera" value="camera/image_raw" />
   </include>
 
-  <rosparam command="load" file="$(arg params)" />
-  <node name="stimulus_loader" pkg="stimuli" type="odor_randomizer.py" output="screen" required="true" />
- 
-  <!-- TODO is this explicit find syntax idiomatic or is there a simpler way to find .launch files? -->
+
+  <rosparam command="load" file="stimulus_parameters.yaml" />
+
+  <node name="stimulus_loader" pkg="stimuli" type="odor_randomizer.py"
+    output="screen" required="true" />
+
   <include file="$(find stimuli)/launch/stimulus_arduino.launch">
     <arg name="port" value="$(arg port)" />
   </include>
+
 </launch>
