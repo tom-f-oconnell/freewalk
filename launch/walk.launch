@@ -3,6 +3,8 @@
   <arg name="stimuli_only" default="False" />
   <arg name="port" default="/dev/ttyACM0" />
   <arg name="video_only" default="True" />
+  <arg name="viewer" default="False" />
+  <arg name="compression" default="True" />
 
   <node name="versionpub" pkg="metatools" type="versionpub.py" unless="$(arg stimuli_only)">
     <rosparam>
@@ -17,6 +19,9 @@
 
   <include file="$(find multi_tracker)/launch/ptgrey_tracking.launch" unless="$(arg stimuli_only)">
     <arg name="video_only" value="$(arg video_only)" />
+    <arg name="viewer" value="$(arg viewer)" />
+    <arg name="compression" value="$(arg compression)" />
+
     <arg name="camera" value="camera/image_raw" />
   </include>
 
