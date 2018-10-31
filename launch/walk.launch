@@ -5,7 +5,6 @@
   <arg name="video_only" default="True" />
   <arg name="viewer" default="False" />
   <arg name="compression" default="True" />
-  <arg name="track_reconstructed_delta_video" default="True" />
 
   <node name="versionpub" pkg="metatools" type="versionpub.py" unless="$(arg stimuli_only)">
     <rosparam>
@@ -22,7 +21,6 @@
     <arg name="video_only" value="$(arg video_only)" />
     <arg name="viewer" value="$(arg viewer)" />
     <arg name="compression" value="$(arg compression)" />
-    <arg name="track_reconstructed_delta_video" value="$(arg track_reconstructed_delta_video)" />
 
     <arg name="camera" value="camera/image_raw" />
   </include>
