@@ -5,6 +5,7 @@
   <arg name="video_only" default="True" />
   <arg name="viewer" default="False" />
   <arg name="compression" default="True" />
+  <arg name="usbcam" default="False" />
 
   <node name="versionpub" pkg="metatools" type="versionpub.py" unless="$(arg stimuli_only)">
     <rosparam>
@@ -17,14 +18,65 @@
     file="$(find multi_tracker)/launch/load_tracking_parameter_yamls.launch"
     unless="$(arg stimuli_only)"/>
 
-  <include file="$(find multi_tracker)/launch/ptgrey_tracking.launch" unless="$(arg stimuli_only)">
-    <arg name="video_only" value="$(arg video_only)" />
-    <arg name="viewer" value="$(arg viewer)" />
-    <arg name="compression" value="$(arg compression)" />
 
-    <arg name="camera" value="camera/image_raw" />
-  </include>
+  <!-- TODO remap usb_cam/image_rect to expected camera topic / vice versa, as
+    required -->
 
+
+  <group unless="$(arg stimuli_only)">
+
+    <!-- TODO delete after refactor. just here for reference.
+    <include file="$(find multi_tracker)/launch/ptgrey_tracking.launch">
+      <arg name="video_only" value="$(arg video_only)" />
+      <arg name="viewer" value="$(arg viewer)" />
+      <arg name="compression" value="$(arg compression)" />
+
+      <arg name="camera" value="camera/image_raw" />
+    </include>
+    -->
+
+    <group unless="$(arg usbcam)">
+      <include file="$(find multi_tracker)/launch/pointgrey_cam.launch">
+        <!--
+        <arg name="serial" value="$(arg serial)" />
+        -->
+      </include>
+    </group>
+
+    <group if="$(arg usbcam)">
+      <node name="usb_cam" pkg="usb_cam" type="usb_cam_node">
+        <!-- TODO appropriate framerate? check not duplicates -->
+        <!-- TODO make camera_name match calibration -->
+      
+        <param name="video_device" value="/dev/video0"/>
+      
+        <!-- TODO make path generic somehow, or have other
+                  scripts replace it when installing -->
+        <param name="camera_info_url"
+          value="file:///home/lab/.ros/camera_info/head_camera.yaml" />
+         
+          <!-- TODO TODO what will this do if not calibrated? it should fail i
+            think... -->
+      </node>
+      
+      <node name="image_proc" pkg="image_proc" type="image_proc" output="screen"
+        ns="usb_cam" />
+    </group>
+
+    <include file="$(find multi_tracker)/launch/tracking.launch">
+      <arg name="video_only" value="$(arg video_only)" />
+      <arg name="viewer" value="$(arg viewer)" />
+      <arg name="compression" value="$(arg compression)" />
+      <!-- TODO need to deal w/ this? just set to false?
+      <arg name="track_reconstructed_delta_video"
+        value="$(arg track_reconstructed_delta_video)" />
+      -->
+
+      <!-- TODO TODO deal with this! remap usb rect output? remap between usb
+        rect and ptgrey outputs based on same flag?-->
+      <arg name="camera" value="$(arg camera)" />
+    </include>
+  </group>
 
   <rosparam command="load" file="stimulus_parameters.yaml" />
 
